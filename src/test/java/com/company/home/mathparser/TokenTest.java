@@ -10,7 +10,7 @@ public class TokenTest
   public void testTokenSubstring() throws Exception
   {
     final String expr = "2+3";
-    final Token t = new Token(expr, 0, null);
+    final Token t = new Token(expr, 0);
     assertThat(t.getRemainingExpression()).isEqualTo("+3");
     assertThat(t.getValue()).isEqualTo("2");
   }

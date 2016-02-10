@@ -1,18 +1,44 @@
 package com.company.home.mathparser;
 
 import java.util.Objects;
+import java.util.Optional;
 
 class Token
 {
   private final String value;
   private final String remainingExpression;
-  private final TokenProducer producer;
+  private final Optional<TokenProducer> excludedProducer;
 
-  Token(final String expression, final int tokenLastCharIndexInExpression, final TokenProducer producer)
+  private Token(final String value, final String remainingExpression, final Optional<TokenProducer> excludedProducer) {
+    this.value = value;
+    this.remainingExpression = remainingExpression;
+    this.excludedProducer = excludedProducer;
+  }
+
+  private static String extractRemainingExpression(String expression, int tokenLastCharIndexInExpression)
   {
-    this.producer=producer;
-    this.value=expression.substring(0, tokenLastCharIndexInExpression+1);
-    this.remainingExpression=expression.substring(tokenLastCharIndexInExpression + 1, expression.length());
+    return expression.substring(tokenLastCharIndexInExpression + 1, expression.length());
+  }
+
+  private static String extractValue(String expression, int tokenLastCharIndexInExpression)
+  {
+    return expression.substring(0, tokenLastCharIndexInExpression+1);
+  }
+
+  Token(final String expression, final int tokenLastCharIndexInExpression)
+  {
+    this(
+        extractValue(expression, tokenLastCharIndexInExpression),
+        extractRemainingExpression(expression, tokenLastCharIndexInExpression),
+        Optional.empty());
+  }
+
+  Token(final String expression, final int tokenLastCharIndexInExpression, final TokenProducer excludedProducer)
+  {
+    this(
+        extractValue(expression, tokenLastCharIndexInExpression),
+        extractRemainingExpression(expression, tokenLastCharIndexInExpression),
+        Optional.of(excludedProducer));
   }
 
   public String getValue()
@@ -25,9 +51,9 @@ class Token
     return remainingExpression;
   }
 
-  public TokenProducer getProducer()
+  public Optional<TokenProducer> getExcludedProducer()
   {
-    return producer;
+    return excludedProducer;
   }
 
   @Override public boolean equals(Object o)
@@ -38,12 +64,11 @@ class Token
       return false;
     Token token=(Token) o;
     return Objects.equals(value, token.value) &&
-        Objects.equals(remainingExpression, token.remainingExpression) &&
-        Objects.equals(producer, token.producer);
+        Objects.equals(remainingExpression, token.remainingExpression);
   }
 
   @Override public int hashCode()
   {
-    return Objects.hash(value, remainingExpression, producer);
+    return Objects.hash(value, remainingExpression);
   }
 }

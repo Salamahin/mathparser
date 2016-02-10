@@ -10,7 +10,7 @@ interface TokenProducer
 
   class NumberTokenProducer implements TokenProducer
   {
-    private static final Pattern pattern=Pattern.compile("[+-]?[0-9]*\\.?[0-9]+");
+    private static final Pattern pattern=Pattern.compile("^[+-]?[0-9]*\\.?[0-9]+");
 
     @Override public Optional<Token> tryProduceToken(final String expression)
     {
@@ -39,6 +39,26 @@ interface TokenProducer
           return Optional.empty();
 
       }
+    }
+  }
+
+  class OpenParenthesisTokenProducer implements TokenProducer {
+
+    @Override public Optional<Token> tryProduceToken(String expression)
+    {
+      if(expression.charAt(0) == '(')
+        return Optional.of(new Token(expression, 0));
+      return Optional.empty();
+    }
+  }
+
+  class ClosedParenthesisTokenProdicer implements TokenProducer {
+
+    @Override public Optional<Token> tryProduceToken(String expression)
+    {
+      if(expression.charAt(0) == ')')
+        return Optional.of(new Token(expression, 0));
+      return Optional.empty();
     }
   }
 }

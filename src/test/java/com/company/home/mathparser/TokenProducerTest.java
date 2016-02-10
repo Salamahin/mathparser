@@ -7,14 +7,24 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class TokenProducerTest
 {
   @Test
-  public void testNumberTokenProducer() throws Exception
+  public void testNumberTokenProducerNormal() throws Exception
   {
     final TokenProducer tp = new TokenProducer.NumberTokenProducer();
 
     final String expression = "2.52+6";
-    final Token expected = new Token(expression, 3, tp);
+    final Token expected = new Token(expression, 3);
 
     assertThat(tp.tryProduceToken(expression).get()).isEqualTo(expected);
+  }
+
+  @Test
+  public void testNumberTokenProducerFail() throws Exception
+  {
+    final TokenProducer tp = new TokenProducer.NumberTokenProducer();
+
+    final String expression = "(2.52)";
+
+    assertThat(tp.tryProduceToken(expression).isPresent()).isFalse();
   }
 
   @Test
@@ -22,7 +32,7 @@ public class TokenProducerTest
     final TokenProducer tp = new TokenProducer.OperationTokenProducer();
 
     final String expression = "+6.23";
-    final Token expected = new Token(expression, 0, tp);
+    final Token expected = new Token(expression, 0);
 
     assertThat(tp.tryProduceToken(expression).get()).isEqualTo(expected);
   }
@@ -32,7 +42,7 @@ public class TokenProducerTest
     final TokenProducer tp = new TokenProducer.OperationTokenProducer();
 
     final String expression = "-6.23";
-    final Token expected = new Token(expression, 0, tp);
+    final Token expected = new Token(expression, 0);
 
     assertThat(tp.tryProduceToken(expression).get()).isEqualTo(expected);
   }
@@ -42,7 +52,7 @@ public class TokenProducerTest
     final TokenProducer tp = new TokenProducer.OperationTokenProducer();
 
     final String expression = "/6.23";
-    final Token expected = new Token(expression, 0, tp);
+    final Token expected = new Token(expression, 0);
 
     assertThat(tp.tryProduceToken(expression).get()).isEqualTo(expected);
   }
@@ -52,7 +62,17 @@ public class TokenProducerTest
     final TokenProducer tp = new TokenProducer.OperationTokenProducer();
 
     final String expression = "*6.23";
-    final Token expected = new Token(expression, 0, tp);
+    final Token expected = new Token(expression, 0);
+
+    assertThat(tp.tryProduceToken(expression).get()).isEqualTo(expected);
+  }
+
+  @Test
+  public void testOpenParenthesisTokenProducer() throws Exception {
+    final TokenProducer tp = new TokenProducer.OpenParenthesisTokenProducer();
+
+    final String expression = "(234)";
+    final Token expected = new Token(expression, 0);
 
     assertThat(tp.tryProduceToken(expression).get()).isEqualTo(expected);
   }

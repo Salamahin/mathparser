@@ -12,12 +12,14 @@ class Tokenizer
 {
   private static final List<TokenProducer> possibleProducers =Lists.newArrayList(
       new TokenProducer.NumberTokenProducer(),
-      new TokenProducer.OperationTokenProducer()
+      new TokenProducer.OperationTokenProducer(),
+      new TokenProducer.ClosedParenthesisTokenProdicer(),
+      new TokenProducer.OpenParenthesisTokenProducer()
   );
 
-  private Optional<Token> tryProduceToken(final String expression, final TokenProducer excludedProducer) {
+  private Optional<Token> tryProduceToken(final String expression, final Optional<TokenProducer> excludedProducer) {
     for(TokenProducer tp: possibleProducers) {
-      if(tp == excludedProducer)
+      if(excludedProducer.isPresent() && tp == excludedProducer.get())
         continue;
 
       Optional<Token> t = tp.tryProduceToken(expression);
@@ -30,14 +32,15 @@ class Tokenizer
 
   List<String> getTokens(String expression) {
     final List<String> tokens = new LinkedList<>();
-    Optional<Token> last;
 
-    TokenProducer excluded = null;
+    Optional<Token> last;
+    Optional<TokenProducer> excluded = Optional.empty();
+
     while (!Strings.isNullOrEmpty(expression) && (last=tryProduceToken(expression, excluded)).isPresent()) {
       final Token t = last.get();
       tokens.add(t.getValue());
       expression = t.getRemainingExpression();
-      excluded = t.getProducer();
+      excluded = t.getExcludedProducer();
     }
 
     return ImmutableList.copyOf(tokens);

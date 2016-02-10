@@ -35,8 +35,8 @@ public class MathParserTest
 
   @Test
   public void canTokenize() throws Exception {
-    final String expression="-2.25*3+63";
-    final List<String> expectedTokens=Lists.newArrayList("-2.25", "*", "3", "+", "63");
+    final String expression="-2.25*(3+63)";
+    final List<String> expectedTokens=Lists.newArrayList("-2.25", "*", "(", "3", "+", "63", ")");
     assertThat(parser.tokenize(expression)).isEqualTo(expectedTokens);
   }
 }
