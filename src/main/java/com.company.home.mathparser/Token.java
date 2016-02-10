@@ -1,63 +1,41 @@
 package com.company.home.mathparser;
 
-import com.google.common.collect.ImmutableList;
+import java.util.Objects;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-abstract class Token
+class Token
 {
   private final String value;
   private final String remainingExpression;
 
-  protected Token(final String value, final String remainingExpression)
+  protected Token(final String expression, final int tokenLastCharIndexInExpression)
   {
-    this.value=value;
-    this.remainingExpression=remainingExpression;
+    this.value=expression.substring(0, tokenLastCharIndexInExpression+1);
+    this.remainingExpression=expression.substring(tokenLastCharIndexInExpression + 1, expression.length());
   }
 
-
-  static List<String> parse(String expression) {
-    final List<String> tokens = new ArrayList<>();
-
-    Optional<Token> lastToken;
-    while ((lastToken = extractToken(expression)).isPresent())
-    {
-      final Token t = lastToken.get();
-      expression=t.remainingExpression;
-      tokens.add(t.value);
-    }
-
-    return ImmutableList.copyOf(tokens);
+  public String getValue()
+  {
+    return value;
   }
 
-  private static Optional<Token> extractToken(final String expression)
+  public String getRemainingExpression()
   {
-    return Optional.empty()
-        .flatMap(ignored -> NumberToken.extract(expression));
+    return remainingExpression;
   }
 
-  private static class NumberToken extends Token
+  @Override public boolean equals(Object o)
   {
-    private static final Pattern pattern=Pattern.compile("/^\\d*\\.?\\d*$/");
+    if (this == o)
+      return true;
+    if (o == null || getClass() != o.getClass())
+      return false;
+    Token token=(Token) o;
+    return Objects.equals(value, token.value) &&
+        Objects.equals(remainingExpression, token.remainingExpression);
+  }
 
-    protected NumberToken(String value, String remainingExpression)
-    {
-      super(value, remainingExpression);
-    }
-
-    public static Optional<Token> extract(final String expression) {
-      final Matcher m = pattern.matcher(expression);
-      if(!m.matches())
-        return Optional.empty();
-
-      final String token = m.group(0);
-      final String remaining = expression.substring(token.length(), token.length()-1);
-
-      return Optional.of(new NumberToken(token, remaining));
-    }
+  @Override public int hashCode()
+  {
+    return Objects.hash(value, remainingExpression);
   }
 }
