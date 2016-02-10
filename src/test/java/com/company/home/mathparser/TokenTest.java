@@ -1,5 +1,6 @@
 package com.company.home.mathparser;
 
+import com.company.home.mathparser.token.Token;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

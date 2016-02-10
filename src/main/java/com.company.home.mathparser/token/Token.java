@@ -1,9 +1,11 @@
-package com.company.home.mathparser;
+package com.company.home.mathparser.token;
+
+import com.company.home.mathparser.token.producers.TokenProducer;
 
 import java.util.Objects;
 import java.util.Optional;
 
-class Token
+public class Token
 {
   private final String value;
   private final String remainingExpression;
@@ -25,7 +27,7 @@ class Token
     return expression.substring(0, tokenLastCharIndexInExpression+1);
   }
 
-  Token(final String expression, final int tokenLastCharIndexInExpression)
+  public Token(final String expression, final int tokenLastCharIndexInExpression)
   {
     this(
         extractValue(expression, tokenLastCharIndexInExpression),
@@ -33,7 +35,7 @@ class Token
         Optional.empty());
   }
 
-  Token(final String expression, final int tokenLastCharIndexInExpression, final TokenProducer excludedProducer)
+  public Token(final String expression, final int tokenLastCharIndexInExpression, final TokenProducer excludedProducer)
   {
     this(
         extractValue(expression, tokenLastCharIndexInExpression),
