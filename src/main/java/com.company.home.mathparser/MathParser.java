@@ -12,7 +12,7 @@ public class MathParser
 
   List<String> tokenize(final String s)
   {
-    return new Tokenizer(s).getTokens();
+    return new Tokenizer().getTokens(s);
   }
 
 }

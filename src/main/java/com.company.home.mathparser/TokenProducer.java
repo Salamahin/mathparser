@@ -20,7 +20,7 @@ interface TokenProducer
 
       final String token=m.group(0);
 
-      return Optional.of(new Token(expression, token.length() - 1));
+      return Optional.of(new Token(expression, token.length() - 1, this));
     }
   }
 
@@ -33,7 +33,7 @@ interface TokenProducer
         case '+':
         case '/':
         case '*':
-          return Optional.of(new Token(expression, 0));
+          return Optional.of(new Token(expression, 0, this));
 
         default:
           return Optional.empty();

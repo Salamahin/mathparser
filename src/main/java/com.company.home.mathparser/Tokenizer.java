@@ -1,46 +1,46 @@
 package com.company.home.mathparser;
 
+import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
-import com.google.common.primitives.Chars;
+import com.google.common.collect.Lists;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
+import java.util.Optional;
 
 class Tokenizer
 {
-  private Queue<Character> expression;
+  private static final List<TokenProducer> possibleProducers =Lists.newArrayList(
+      new TokenProducer.NumberTokenProducer(),
+      new TokenProducer.OperationTokenProducer()
+  );
 
-  public Tokenizer(String expression)
-  {
-    this.expression=new LinkedList<>(Chars.asList(expression.toCharArray()));
-  }
+  private Optional<Token> tryProduceToken(final String expression, final TokenProducer excludedProducer) {
+    for(TokenProducer tp: possibleProducers) {
+      if(tp == excludedProducer)
+        continue;
 
-  private Character pollOneDigitOrNull()
-  {
-    Character c=expression.poll();
-    if (c == null)
-      return null;
-
-    return Character.isDigit(c) ? c : null;
-  }
-
-  private String extractToken()
-  {
-    String token="";
-    Character c;
-    while ((c = pollOneDigitOrNull()) != null)
-    {
-      token+=c;
+      Optional<Token> t = tp.tryProduceToken(expression);
+      if(t.isPresent())
+        return t;
     }
-    return token;
+
+    return Optional.empty();
   }
 
-  List<String> getTokens()
-  {
-    final List<String> tokens=new ArrayList<>();
-    tokens.add(extractToken());
+  List<String> getTokens(String expression) {
+    final List<String> tokens = new LinkedList<>();
+    Optional<Token> last;
+
+    TokenProducer excluded = null;
+    while (!Strings.isNullOrEmpty(expression) && (last=tryProduceToken(expression, excluded)).isPresent()) {
+      final Token t = last.get();
+      tokens.add(t.getValue());
+      expression = t.getRemainingExpression();
+      excluded = t.getProducer();
+    }
+
     return ImmutableList.copyOf(tokens);
+
   }
 }
