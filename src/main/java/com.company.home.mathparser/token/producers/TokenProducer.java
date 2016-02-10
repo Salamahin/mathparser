@@ -1,11 +1,10 @@
 package com.company.home.mathparser.token.producers;
 
-import com.company.home.mathparser.token.Token;
+import com.company.home.mathparser.token.TokenInformation;
 
 import java.util.Optional;
 
 public interface TokenProducer
 {
-  Optional<Token> tryProduceToken(final String expression);
-
+  Optional<TokenInformation> tryProduceToken(final String expression);
 }

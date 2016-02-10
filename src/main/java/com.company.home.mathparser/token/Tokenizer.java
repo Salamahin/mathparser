@@ -12,18 +12,17 @@ import java.util.Optional;
 public class Tokenizer
 {
   private static final List<TokenProducer> possibleProducers =Lists.newArrayList(
-      new NumberTokenProducer(),
-      new OperationTokenProducer(),
-      new ClosedParenthesisTokenProducer(),
-      new OpenParenthesisTokenProducer()
+      new ValueTokenProducer(),
+      new BinaryOperationTokenProducer(),
+      new ParenthesisTokenProducer()
   );
 
-  private Optional<Token> produceAnyToken(final String expression, final Optional<TokenProducer> excludedProducer) {
+  private Optional<TokenInformation> produceAnyToken(final String expression, final Optional<TokenProducer> excludedProducer) {
     for(TokenProducer tp: possibleProducers) {
       if(excludedProducer.isPresent() && tp == excludedProducer.get())
         continue;
 
-      final Optional<Token> t = tp.tryProduceToken(expression);
+      final Optional<TokenInformation> t = tp.tryProduceToken(expression);
       if(t.isPresent())
         return t;
     }
@@ -34,12 +33,12 @@ public class Tokenizer
   public List<String> tokenize(String expression) {
     final List<String> tokens = new LinkedList<>();
 
-    Optional<Token> last;
+    Optional<TokenInformation> last;
     Optional<TokenProducer> excluded = Optional.empty();
 
     while (!Strings.isNullOrEmpty(expression) && (last=produceAnyToken(expression, excluded)).isPresent()) {
-      final Token t = last.get();
-      tokens.add(t.getValue());
+      final TokenInformation t = last.get();
+      tokens.add(t.getTokenValue().toString());
       expression = t.getRemainingExpression();
       excluded = t.getExcludedProducer();
     }

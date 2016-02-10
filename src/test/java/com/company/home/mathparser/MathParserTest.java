@@ -11,7 +11,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class MathParserTest
 {
-
   private MathParser parser;
 
   @Before
