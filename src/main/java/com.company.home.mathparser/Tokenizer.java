@@ -17,12 +17,12 @@ class Tokenizer
       new TokenProducer.OpenParenthesisTokenProducer()
   );
 
-  private Optional<Token> tryProduceToken(final String expression, final Optional<TokenProducer> excludedProducer) {
+  private Optional<Token> produceAnyToken(final String expression, final Optional<TokenProducer> excludedProducer) {
     for(TokenProducer tp: possibleProducers) {
       if(excludedProducer.isPresent() && tp == excludedProducer.get())
         continue;
 
-      Optional<Token> t = tp.tryProduceToken(expression);
+      final Optional<Token> t = tp.tryProduceToken(expression);
       if(t.isPresent())
         return t;
     }
@@ -36,7 +36,7 @@ class Tokenizer
     Optional<Token> last;
     Optional<TokenProducer> excluded = Optional.empty();
 
-    while (!Strings.isNullOrEmpty(expression) && (last=tryProduceToken(expression, excluded)).isPresent()) {
+    while (!Strings.isNullOrEmpty(expression) && (last=produceAnyToken(expression, excluded)).isPresent()) {
       final Token t = last.get();
       tokens.add(t.getValue());
       expression = t.getRemainingExpression();
