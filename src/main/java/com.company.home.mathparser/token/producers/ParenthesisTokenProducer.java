@@ -23,9 +23,9 @@ public final class ParenthesisTokenProducer implements TokenProducer
     switch (expression.charAt(0))
     {
       case '(':
-        return getTokenInformation(expression, new OpenParenthesis());
+        return getTokenInformation(expression, new LeftParenthesis());
       case ')':
-        return getTokenInformation(expression, new ClosedParenthesis());
+        return getTokenInformation(expression, new RightParenthesis());
 
       default:
         return Optional.empty();

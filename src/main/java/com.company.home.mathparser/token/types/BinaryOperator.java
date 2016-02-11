@@ -14,30 +14,31 @@ public abstract class BinaryOperator extends Operator
 
   @Override public final void organiseRPN(final List<ExpressionToken<?>> california, final Stack<ExpressionToken<?>> texas)
   {
-//    texas.push(this);
-
     while (texas.size() != 0)
     {
       final ExpressionToken<?> head=texas.peek();
       if (!tokenIsInstanceOfBinaryOperator(head))
         break;
 
-      final BinaryOperator other=(BinaryOperator) head;
-      if (compareWith(other))
-        california.add(texas.pop());
+      final BinaryOperator castedHead=(BinaryOperator) head;
+      if (!compareWith(castedHead))
+        break;
 
-      texas.push(this);
+      california.add(texas.pop());
     }
-
+    texas.push(this);
   }
 
   private boolean compareWith(final BinaryOperator operator)
   {
-    return getPriority() <= operator.getPriority();
+    return (isLeftAssociative() && getPrecedence() < operator.getPrecedence()) ||
+            (!isLeftAssociative() && getPrecedence() <=  operator.getPrecedence());
   }
 
   private boolean tokenIsInstanceOfBinaryOperator(final ExpressionToken<?> t)
   {
     return t instanceof BinaryOperator;
   }
+
+  public abstract boolean isLeftAssociative();
 }

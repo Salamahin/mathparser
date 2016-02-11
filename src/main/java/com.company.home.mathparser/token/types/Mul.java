@@ -7,7 +7,7 @@ public final class Mul extends BinaryOperator
     super("*");
   }
 
-  @Override protected int getPriority()
+  @Override protected int getPrecedence()
   {
     return 3;
   }
@@ -15,5 +15,10 @@ public final class Mul extends BinaryOperator
   @Override public Value evaluate(final Value first, final Value second)
   {
     return new Value(first.getValue() * second.getValue());
+  }
+
+  @Override
+  public final boolean isLeftAssociative() {
+    return true;
   }
 }

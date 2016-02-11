@@ -9,12 +9,12 @@ import java.util.Stack;
 
 import static java.util.stream.Collectors.toList;
 
-public class SortFacility
+public class ShuntingYard
 {
   private final List<ExpressionToken<?>> california;
   private final Stack<ExpressionToken<?>> texas;
 
-  public SortFacility()
+  public ShuntingYard()
   {
     california= new LinkedList<>();
     texas= new Stack<>();

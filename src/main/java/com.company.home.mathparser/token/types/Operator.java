@@ -1,8 +1,5 @@
 package com.company.home.mathparser.token.types;
 
-import java.util.List;
-import java.util.Stack;
-
 public abstract class Operator extends ExpressionToken<String> implements Comparable<Operator>
 {
   protected Operator(String value)
@@ -10,11 +7,11 @@ public abstract class Operator extends ExpressionToken<String> implements Compar
     super(value);
   }
 
-  protected abstract int getPriority();
+  protected abstract int getPrecedence();
 
   @Override public final int compareTo(Operator o)
   {
-    return Integer.compare(getPriority(), o.getPriority());
+    return Integer.compare(getPrecedence(), o.getPrecedence());
   }
 
   @Override final public String toString()

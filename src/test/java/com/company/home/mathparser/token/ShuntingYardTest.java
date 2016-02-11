@@ -9,16 +9,16 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class SortFacilityTest
+public class ShuntingYardTest
 {
   private Tokenizer tokenizer;
-  private SortFacility sortFacility;
+  private ShuntingYard shuntingYard;
 
   @Before
   public void setUp() throws Exception
   {
     tokenizer=new Tokenizer();
-    sortFacility=new SortFacility();
+    shuntingYard =new ShuntingYard();
   }
 
   @Test
@@ -28,7 +28,7 @@ public class SortFacilityTest
     final List<String> expectedList=Lists.newArrayList("3.0", "4.0", "2.0", "*", "1.0", "5.0", "-", "2.0", "^", "/", "+");
 
     final List<ExpressionToken<?>> tokens=tokenizer.tokenize(expression);
-    final List<String> rpn=sortFacility.toRPN(tokens);
+    final List<String> rpn= shuntingYard.toRPN(tokens);
 
     assertThat(rpn).isEqualTo(expectedList);
   }

@@ -7,7 +7,7 @@ public final class Minus extends BinaryOperator
     super("-");
   }
 
-  @Override protected int getPriority()
+  @Override protected int getPrecedence()
   {
     return 1;
   }
@@ -15,5 +15,10 @@ public final class Minus extends BinaryOperator
   @Override public Value evaluate(final Value first, final Value second)
   {
     return new Value(first.getValue() - second.getValue());
+  }
+
+  @Override
+  public final boolean isLeftAssociative() {
+    return true;
   }
 }

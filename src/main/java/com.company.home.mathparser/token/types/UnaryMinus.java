@@ -12,7 +12,7 @@ public class UnaryMinus extends UnaryOperator
     return new Value(-value.getValue());
   }
 
-  @Override protected int getPriority()
+  @Override protected int getPrecedence()
   {
     return 1;
   }

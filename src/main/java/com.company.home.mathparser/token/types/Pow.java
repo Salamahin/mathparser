@@ -7,7 +7,7 @@ public class Pow extends BinaryOperator
     super("^");
   }
 
-  @Override protected int getPriority()
+  @Override protected int getPrecedence()
   {
     return 4;
   }
@@ -15,5 +15,10 @@ public class Pow extends BinaryOperator
   @Override public Value evaluate(final Value first, final Value second)
   {
     return new Value(Math.pow(first.getValue(), second.getValue()));
+  }
+
+  @Override
+  public final boolean isLeftAssociative() {
+    return false;
   }
 }
