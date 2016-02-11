@@ -3,20 +3,17 @@ package com.company.home.mathparser.token.types;
 import java.util.List;
 import java.util.Stack;
 
-public final class Value extends ExpressionToken<Double>
+abstract class UnaryOperator extends Operator
 {
-  public Value(double value)
+  protected UnaryOperator(String value)
   {
     super(value);
   }
 
-  @Override public String toString()
-  {
-    return String.valueOf(getValue());
-  }
+  public abstract Value evaluate(final Value value);
 
   @Override public final void organiseRPN(final List<ExpressionToken<?>> california, final Stack<ExpressionToken<?>> texas)
   {
-    california.add(this);
+    texas.push(this);
   }
 }

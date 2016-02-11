@@ -1,5 +1,8 @@
 package com.company.home.mathparser.token.types;
 
+import java.util.List;
+import java.util.Stack;
+
 public abstract class Operator extends ExpressionToken<String> implements Comparable<Operator>
 {
   protected Operator(String value)

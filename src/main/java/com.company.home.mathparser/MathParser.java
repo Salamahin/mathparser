@@ -1,6 +1,7 @@
 package com.company.home.mathparser;
 
 import com.company.home.mathparser.token.Tokenizer;
+import com.company.home.mathparser.token.types.ExpressionToken;
 
 import java.util.List;
 
@@ -12,7 +13,7 @@ public class MathParser
     return 4;
   }
 
-  List<String> tokenize(final String s)
+  List<ExpressionToken<?>> tokenize(final String s)
   {
     return new Tokenizer().tokenize(s);
   }

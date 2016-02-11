@@ -1,6 +1,7 @@
 package com.company.home.mathparser.token;
 
 import com.company.home.mathparser.token.producers.*;
+import com.company.home.mathparser.token.types.ExpressionToken;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
@@ -13,6 +14,7 @@ public class Tokenizer
 {
   private static final List<TokenProducer> possibleProducers =Lists.newArrayList(
       new ValueTokenProducer(),
+      new UnaryOperationTokenProducer(),
       new BinaryOperationTokenProducer(),
       new ParenthesisTokenProducer()
   );
@@ -30,20 +32,19 @@ public class Tokenizer
     return Optional.empty();
   }
 
-  public List<String> tokenize(String expression) {
-    final List<String> tokens = new LinkedList<>();
+  public List<ExpressionToken<?>> tokenize(String expression) {
+    final List<ExpressionToken<?>> tokens = new LinkedList<>();
 
     Optional<TokenInformation> last;
     Optional<TokenProducer> excluded = Optional.empty();
 
     while (!Strings.isNullOrEmpty(expression) && (last=produceAnyToken(expression, excluded)).isPresent()) {
       final TokenInformation t = last.get();
-      tokens.add(t.getTokenValue().toString());
+      tokens.add(t.getTokenValue());
       expression = t.getRemainingExpression();
       excluded = t.getExcludedProducer();
     }
 
     return ImmutableList.copyOf(tokens);
-
   }
 }
