@@ -12,8 +12,8 @@ public class Pow extends BinaryOperator
     return 4;
   }
 
-  @Override public Value evaluate(final Value first, final Value second)
-  {
+  @Override
+  protected Value doEvaluate(final Value first, final Value second) {
     return new Value(Math.pow(first.getValue(), second.getValue()));
   }
 

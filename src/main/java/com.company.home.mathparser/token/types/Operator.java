@@ -1,15 +1,16 @@
 package com.company.home.mathparser.token.types;
 
-public abstract class Operator extends ExpressionToken<String> implements Comparable<Operator>
+
+public abstract class Operator extends Calculable implements Comparable<Operator>
 {
-  protected Operator(String value)
+  protected Operator(final String value)
   {
     super(value);
   }
 
   protected abstract int getPrecedence();
 
-  @Override public final int compareTo(Operator o)
+  @Override public final int compareTo(final Operator o)
   {
     return Integer.compare(getPrecedence(), o.getPrecedence());
   }

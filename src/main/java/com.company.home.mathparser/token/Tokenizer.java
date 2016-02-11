@@ -17,7 +17,8 @@ public class Tokenizer
       ValueTokenProducer.getInstance(),
       UnaryOperationTokenProducer.getInstance(),
       BinaryOperationTokenProducer.getInstance(),
-      ParenthesisTokenProducer.getInstance()
+      ParenthesisTokenProducer.getInstance(),
+          FunctionTokenProducer.getInstance()
   );
 
   private Optional<TokenInformation> produceAnyToken(final String expression, final List<TokenProducer> excludedProducers) {
@@ -34,6 +35,7 @@ public class Tokenizer
   }
 
   public List<ExpressionToken<?>> tokenize(String expression) {
+    expression = expression.replaceAll(" ", "");
     final List<ExpressionToken<?>> tokens = new LinkedList<>();
 
     Optional<TokenInformation> last;

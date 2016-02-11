@@ -9,11 +9,12 @@ public final class Div extends BinaryOperator
 
   @Override protected int getPrecedence()
   {
-    return 2;
+    return 3;
   }
 
-  @Override public Value evaluate(final Value first, final Value second)
-  {
+
+  @Override
+  protected Value doEvaluate(final Value first, final Value second) {
     return new Value(first.getValue() / second.getValue());
   }
 

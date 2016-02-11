@@ -9,7 +9,7 @@ public abstract class ExpressionToken<T>
 {
   private final T value;
 
-  public ExpressionToken(T value)
+  public ExpressionToken(final T value)
   {
     this.value=value;
   }

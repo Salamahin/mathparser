@@ -17,13 +17,13 @@ public class RightParenthesis extends ExpressionToken<String>
     ExpressionToken<?> head = null;
     while (!texas.isEmpty()) {
       head = texas.peek();
-      if(tokenIsInstanceOfOpenParenthesis(head))
+      if(tokenIsInstanceOfLeftParenthesis(head))
           break;
 
       california.add(texas.pop());
     }
 
-    if(!tokenIsInstanceOfOpenParenthesis(head))
+    if(!tokenIsInstanceOfLeftParenthesis(head))
       throw new UnbalancedException();
 
     texas.pop();
@@ -32,16 +32,16 @@ public class RightParenthesis extends ExpressionToken<String>
       return;
 
     head = texas.peek();
-    if(tokenIsInstanceOfUnaryOperator(head))
+    if(tokenIsInstanceOfFunc(head))
       california.add(texas.pop());
   }
 
-  private boolean tokenIsInstanceOfOpenParenthesis(final ExpressionToken<?> token){
+  private boolean tokenIsInstanceOfLeftParenthesis(final ExpressionToken<?> token){
     return token instanceof LeftParenthesis;
   }
 
-  private boolean tokenIsInstanceOfUnaryOperator(final ExpressionToken<?> token) {
-    return token instanceof UnaryOperator;
+  private boolean tokenIsInstanceOfFunc(final ExpressionToken<?> token) {
+    return token instanceof Func;
   }
 
   @Override

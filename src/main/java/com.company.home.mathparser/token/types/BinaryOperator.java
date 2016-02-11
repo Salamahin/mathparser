@@ -5,12 +5,10 @@ import java.util.Stack;
 
 public abstract class BinaryOperator extends Operator
 {
-  protected BinaryOperator(String value)
+  protected BinaryOperator(final String value)
   {
     super(value);
   }
-
-  public abstract Value evaluate(final Value first, final Value second);
 
   @Override public final void organiseRPN(final List<ExpressionToken<?>> california, final Stack<ExpressionToken<?>> texas)
   {
@@ -31,9 +29,19 @@ public abstract class BinaryOperator extends Operator
 
   private boolean compareWith(final BinaryOperator operator)
   {
-    return (isLeftAssociative() && getPrecedence() < operator.getPrecedence()) ||
-            (!isLeftAssociative() && getPrecedence() <=  operator.getPrecedence());
+    return (isLeftAssociative() && getPrecedence() <= operator.getPrecedence()) ||
+            (!isLeftAssociative() && getPrecedence() <  operator.getPrecedence());
   }
+
+  protected abstract Value doEvaluate(final Value first, final Value second);
+
+  @Override
+  public final void evaluate(final Stack<ExpressionToken<?>> stack) {
+    final Value second = (Value) stack.pop();
+    final Value first = (Value) stack.pop();
+    stack.push(doEvaluate(first, second));
+  }
+
 
   private boolean tokenIsInstanceOfBinaryOperator(final ExpressionToken<?> t)
   {

@@ -34,6 +34,6 @@ public final class ParenthesisTokenProducer implements TokenProducer
 
   private Optional<TokenInformation> getTokenInformation(final String expression, final ExpressionToken<?> token)
   {
-    return Optional.of(new TokenInformation(token, expression.substring(1), this));
+    return Optional.of(new TokenInformation(token, expression.substring(1)));
   }
 }
