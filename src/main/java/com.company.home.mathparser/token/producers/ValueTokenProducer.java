@@ -9,6 +9,17 @@ import java.util.regex.Pattern;
 
 public final class ValueTokenProducer implements TokenProducer
 {
+  private static class InstanceHolder {
+    private static final TokenProducer INSTANCE = new ValueTokenProducer();
+  }
+
+  private ValueTokenProducer() {
+  }
+
+  public static TokenProducer getInstance() {
+    return InstanceHolder.INSTANCE;
+  }
+
   private static final Pattern pattern=Pattern.compile("^[+-]?[0-9]*\\.?[0-9]+");
 
   @Override public Optional<TokenInformation> tryProduceToken(final String expression)
@@ -22,6 +33,6 @@ public final class ValueTokenProducer implements TokenProducer
 
   private TokenInformation getTokenInfo(final String expression, final String matchedGroup)
   {
-    return new TokenInformation(new Value(Double.valueOf(matchedGroup)), expression.substring(matchedGroup.length()), Optional.of(this));
+    return new TokenInformation(new Value(Double.valueOf(matchedGroup)), expression.substring(matchedGroup.length()), this, UnaryOperationTokenProducer.getInstance());
   }
 }

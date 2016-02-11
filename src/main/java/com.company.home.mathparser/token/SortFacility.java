@@ -24,8 +24,8 @@ public class SortFacility
     for(ExpressionToken<?> t: input)
       t.organiseRPN(california, texas);
 
-    ExpressionToken<?> head;
-    while ((head = texas.pop()) != null) {
+    while (!texas.empty()) {
+      ExpressionToken<?> head = texas.pop();
       if(!tokenInstanceOfOperator(head))
         throw new UnbalancedException();
 

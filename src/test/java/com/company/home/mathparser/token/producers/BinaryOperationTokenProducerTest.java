@@ -8,12 +8,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class BinaryOperationTokenProducerTest
 {
-  private BinaryOperationTokenProducer producer;
+  private TokenProducer producer;
 
   @Before
   public void setUp() throws Exception
   {
-    producer=new BinaryOperationTokenProducer();
+    producer=BinaryOperationTokenProducer.getInstance();
   }
 
   @Test

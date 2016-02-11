@@ -14,7 +14,7 @@ public class ParenthesisTokenProducerTest
   @Before
   public void setUp() throws Exception
   {
-    producer=new ParenthesisTokenProducer();
+    producer=ParenthesisTokenProducer.getInstance();
   }
 
   @Test

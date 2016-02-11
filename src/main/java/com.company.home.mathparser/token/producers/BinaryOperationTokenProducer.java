@@ -7,6 +7,17 @@ import java.util.Optional;
 
 public final class BinaryOperationTokenProducer implements TokenProducer
 {
+  private static class InstanceHolder {
+    private static final TokenProducer INSTANCE = new BinaryOperationTokenProducer();
+  }
+
+  private BinaryOperationTokenProducer() {
+  }
+
+  public static TokenProducer getInstance() {
+    return InstanceHolder.INSTANCE;
+  }
+
   @Override public Optional<TokenInformation> tryProduceToken(final String expression)
   {
     switch (expression.charAt(0))
@@ -29,6 +40,6 @@ public final class BinaryOperationTokenProducer implements TokenProducer
 
   private Optional<TokenInformation> getTokenInformation(final String expression, final ExpressionToken<?> token)
   {
-    return Optional.of(new TokenInformation(token, expression.substring(1), Optional.of(this)));
+    return Optional.of(new TokenInformation(token, expression.substring(1), this));
   }
 }

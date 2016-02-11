@@ -19,10 +19,9 @@ public class ClosedParenthesis extends Operator
 
   @Override public final void organiseRPN(final List<ExpressionToken<?>> california, final Stack<ExpressionToken<?>> texas)
   {
-    ExpressionToken<?> head = null;
-    while ((head = texas.pop()) != null) {
-      if(tokenIsInstanceOfOpenParentesis(head)) {
-        head = texas.pop();
+    while (!texas.isEmpty()) {
+      if(tokenIsInstanceOfOpenParentesis(texas.pop())) {
+        final ExpressionToken<?> head = texas.pop();
         if(head != null && tokenIsIntanceOfOperator(head))
           california.add(head);
 

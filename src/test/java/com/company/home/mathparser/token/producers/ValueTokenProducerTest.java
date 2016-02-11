@@ -9,12 +9,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class ValueTokenProducerTest
 {
 
-  private ValueTokenProducer producer;
+  private TokenProducer producer;
 
   @Before
   public void setUp() throws Exception
   {
-    producer=new ValueTokenProducer();
+    producer=ValueTokenProducer.getInstance();
   }
 
   @Test

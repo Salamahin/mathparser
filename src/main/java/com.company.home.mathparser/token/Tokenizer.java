@@ -6,6 +6,7 @@ import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -13,15 +14,15 @@ import java.util.Optional;
 public class Tokenizer
 {
   private static final List<TokenProducer> possibleProducers =Lists.newArrayList(
-      new ValueTokenProducer(),
-      new UnaryOperationTokenProducer(),
-      new BinaryOperationTokenProducer(),
-      new ParenthesisTokenProducer()
+      ValueTokenProducer.getInstance(),
+      UnaryOperationTokenProducer.getInstance(),
+      BinaryOperationTokenProducer.getInstance(),
+      ParenthesisTokenProducer.getInstance()
   );
 
-  private Optional<TokenInformation> produceAnyToken(final String expression, final Optional<TokenProducer> excludedProducer) {
+  private Optional<TokenInformation> produceAnyToken(final String expression, final List<TokenProducer> excludedProducers) {
     for(TokenProducer tp: possibleProducers) {
-      if(excludedProducer.isPresent() && tp == excludedProducer.get())
+      if(excludedProducers.contains(tp))
         continue;
 
       final Optional<TokenInformation> t = tp.tryProduceToken(expression);
@@ -36,13 +37,13 @@ public class Tokenizer
     final List<ExpressionToken<?>> tokens = new LinkedList<>();
 
     Optional<TokenInformation> last;
-    Optional<TokenProducer> excluded = Optional.empty();
+    List<TokenProducer> excluded = new ArrayList<>();
 
     while (!Strings.isNullOrEmpty(expression) && (last=produceAnyToken(expression, excluded)).isPresent()) {
       final TokenInformation t = last.get();
       tokens.add(t.getTokenValue());
       expression = t.getRemainingExpression();
-      excluded = t.getExcludedProducer();
+      excluded = t.getExcludedProducers();
     }
 
     return ImmutableList.copyOf(tokens);

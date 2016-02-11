@@ -25,7 +25,7 @@ public class SortFacilityTest
   public void testWorking() throws Exception
   {
     final String expression="3+4*2/(1-5)^2";
-    final List<String> expectedList=Lists.newArrayList("3", "4", "2", "*", "1", "5", "-", "2", "^", "/", "+");
+    final List<String> expectedList=Lists.newArrayList("3.0", "4.0", "2.0", "*", "1.0", "5.0", "-", "2.0", "^", "/", "+");
 
     final List<ExpressionToken<?>> tokens=tokenizer.tokenize(expression);
     final List<String> rpn=sortFacility.toRPN(tokens);
