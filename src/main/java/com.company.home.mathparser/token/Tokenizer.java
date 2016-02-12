@@ -13,40 +13,47 @@ import java.util.Optional;
 
 public class Tokenizer
 {
-  private static final List<TokenProducer> possibleProducers =Lists.newArrayList(
+  private static final List<TokenProducer> possibleProducers=Lists.newArrayList(
       ValueTokenProducer.getInstance(),
       UnaryOperationTokenProducer.getInstance(),
       BinaryOperationTokenProducer.getInstance(),
       ParenthesisTokenProducer.getInstance(),
-          FunctionTokenProducer.getInstance()
+      FunctionTokenProducer.getInstance()
   );
 
-  private Optional<TokenInformation> produceAnyToken(final String expression, final List<TokenProducer> excludedProducers) {
-    for(TokenProducer tp: possibleProducers) {
-      if(excludedProducers.contains(tp))
+  private Optional<TokenInformation> produceAnyToken(final String expression, final List<TokenProducer> excludedProducers)
+  {
+    for (TokenProducer tp : possibleProducers)
+    {
+      if (excludedProducers.contains(tp))
         continue;
 
-      final Optional<TokenInformation> t = tp.tryProduceToken(expression);
-      if(t.isPresent())
+      final Optional<TokenInformation> t=tp.tryProduceToken(expression);
+      if (t.isPresent())
         return t;
     }
 
     return Optional.empty();
   }
 
-  public List<ExpressionToken<?>> tokenize(String expression) {
-    expression = expression.replaceAll(" ", "");
-    final List<ExpressionToken<?>> tokens = new LinkedList<>();
+  public List<ExpressionToken<?>> tokenize(final String expression)
+  {
+    String expr=expression.replaceAll(" ", "");
+    final List<ExpressionToken<?>> tokens=new LinkedList<>();
 
     Optional<TokenInformation> last;
-    List<TokenProducer> excluded = new ArrayList<>();
+    List<TokenProducer> excluded=new ArrayList<>();
 
-    while (!Strings.isNullOrEmpty(expression) && (last=produceAnyToken(expression, excluded)).isPresent()) {
-      final TokenInformation t = last.get();
+    while (!Strings.isNullOrEmpty(expr) && (last=produceAnyToken(expr, excluded)).isPresent())
+    {
+      final TokenInformation t=last.get();
       tokens.add(t.getTokenValue());
-      expression = t.getRemainingExpression();
-      excluded = t.getExcludedProducers();
+      expr=t.getRemainingExpression();
+      excluded=t.getExcludedProducers();
     }
+
+    if (!Strings.isNullOrEmpty(expr))
+      throw new UnrecognizedExpression(expression);
 
     return ImmutableList.copyOf(tokens);
   }

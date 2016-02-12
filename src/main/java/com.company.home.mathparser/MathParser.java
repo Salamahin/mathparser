@@ -1,5 +1,6 @@
 package com.company.home.mathparser;
 
+import com.company.home.mathparser.token.ShuntingYard;
 import com.company.home.mathparser.token.Tokenizer;
 import com.company.home.mathparser.token.types.ExpressionToken;
 
@@ -7,15 +8,12 @@ import java.util.List;
 
 public class MathParser
 {
+  private final ShuntingYard evaluator = new ShuntingYard();
+  private final Tokenizer tokenizer = new Tokenizer();
 
-  public int parse(String s)
+  public double parse(final String s)
   {
-    return 4;
-  }
-
-  List<ExpressionToken<?>> tokenize(final String s)
-  {
-    return new Tokenizer().tokenize(s);
+    return evaluator.evaluate(evaluator.toRPN(tokenizer.tokenize(s)));
   }
 
 }

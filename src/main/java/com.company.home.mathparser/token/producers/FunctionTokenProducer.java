@@ -27,7 +27,7 @@ public class FunctionTokenProducer implements TokenProducer {
 
     private Optional<TokenInformation> tryProduceByFuncName(final Func func, final String expression) {
         final String pattern = func.getValue();
-        final String actual = expression.substring(0, pattern.length());
+        final String actual = expression.substring(0, Math.min(pattern.length(), expression.length()));
 
         if (!pattern.equalsIgnoreCase(actual))
             return Optional.empty();

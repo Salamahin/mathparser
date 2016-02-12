@@ -23,17 +23,12 @@ public final class ParenthesisTokenProducer implements TokenProducer
     switch (expression.charAt(0))
     {
       case '(':
-        return getTokenInformation(expression, new LeftParenthesis());
+        return Optional.of(new TokenInformation(new LeftParenthesis(), expression.substring(1), BinaryOperationTokenProducer.getInstance()));
       case ')':
-        return getTokenInformation(expression, new RightParenthesis());
+        return Optional.of(new TokenInformation(new RightParenthesis(), expression.substring(1), ValueTokenProducer.getInstance(), UnaryOperationTokenProducer.getInstance()));
 
       default:
         return Optional.empty();
     }
-  }
-
-  private Optional<TokenInformation> getTokenInformation(final String expression, final ExpressionToken<?> token)
-  {
-    return Optional.of(new TokenInformation(token, expression.substring(1)));
   }
 }
