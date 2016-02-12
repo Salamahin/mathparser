@@ -3,16 +3,17 @@ package com.company.home.mathparser.token.types;
 import com.company.home.mathparser.token.UnbalancedException;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Stack;
 
-public final class FuncParamSep extends ExpressionToken<String> {
-    public FuncParamSep() {
-        super(",");
+public final class FuncParamSep extends Token<String> {
+    public FuncParamSep(final String remainigExpression, final Optional<Token<?>> prevToken) {
+        super(",", remainigExpression, prevToken);
     }
 
     @Override
-    public void organiseRPN(final List<ExpressionToken<?>> california, final Stack<ExpressionToken<?>> texas) {
-        ExpressionToken<?> head = null;
+    public void organiseRPN(final List<Token<?>> california, final Stack<Token<?>> texas) {
+        Token<?> head = null;
         while (!texas.isEmpty()) {
             head = texas.peek();
             if(tokenIsInstanceOfLeftParenthesis(head))
@@ -25,7 +26,7 @@ public final class FuncParamSep extends ExpressionToken<String> {
             throw new UnbalancedException();
     }
 
-    private boolean tokenIsInstanceOfLeftParenthesis(final ExpressionToken<?> t) {
+    private boolean tokenIsInstanceOfLeftParenthesis(final Token<?> t) {
         return t instanceof LeftParenthesis;
     }
 

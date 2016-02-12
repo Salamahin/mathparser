@@ -1,7 +1,7 @@
 package com.company.home.mathparser.token;
 
 import com.company.home.mathparser.token.producers.*;
-import com.company.home.mathparser.token.types.ExpressionToken;
+import com.company.home.mathparser.token.types.Token;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
@@ -21,25 +21,26 @@ public class Tokenizer
       FunctionTokenProducer.getInstance()
   );
 
-  private Optional<TokenInformation> produceAnyToken(final String expression, final List<TokenProducer> excludedProducers)
-  {
-    for (TokenProducer tp : possibleProducers)
-    {
-      if (excludedProducers.contains(tp))
-        continue;
+//  private Optional<Token<?>> produceAnyToken(final String expression, final List<TokenProducer> excludedProducers)
+//  {
+//    Optional<Token<?>> prev = Optional.empty();
+//    for (TokenProducer tp : possibleProducers)
+//    {
+//      if (excludedProducers.contains(tp))
+//        continue;
+//
+//      final Optional<Token<?>> t=tp.tryProduceToken(expression, prev);
+//      if (t.isPresent())
+//        return t;
+//    }
+//
+//    return Optional.empty();
+//  }
 
-      final Optional<TokenInformation> t=tp.tryProduceToken(expression);
-      if (t.isPresent())
-        return t;
-    }
-
-    return Optional.empty();
-  }
-
-  public List<ExpressionToken<?>> tokenize(final String expression)
+  public List<Token<?>> tokenize(final String expression)
   {
     String expr=expression.replaceAll(" ", "");
-    final List<ExpressionToken<?>> tokens=new LinkedList<>();
+    final List<Token<?>> tokens=new LinkedList<>();
 
     Optional<TokenInformation> last;
     List<TokenProducer> excluded=new ArrayList<>();

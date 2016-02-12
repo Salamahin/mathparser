@@ -2,9 +2,6 @@ package com.company.home.mathparser;
 
 import com.company.home.mathparser.token.ShuntingYard;
 import com.company.home.mathparser.token.Tokenizer;
-import com.company.home.mathparser.token.types.ExpressionToken;
-
-import java.util.List;
 
 public class MathParser
 {

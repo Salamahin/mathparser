@@ -1,21 +1,18 @@
 package com.company.home.mathparser.token;
 
 import com.company.home.mathparser.token.types.Calculable;
-import com.company.home.mathparser.token.types.ExpressionToken;
+import com.company.home.mathparser.token.types.Token;
 import com.company.home.mathparser.token.types.Operator;
 import com.company.home.mathparser.token.types.Value;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Stack;
-import java.util.stream.Collectors;
-
-import static java.util.stream.Collectors.toList;
 
 public class ShuntingYard
 {
-  private final List<ExpressionToken<?>> california;
-  private final Stack<ExpressionToken<?>> texas;
+  private final List<Token<?>> california;
+  private final Stack<Token<?>> texas;
 
   public ShuntingYard()
   {
@@ -23,12 +20,12 @@ public class ShuntingYard
     texas= new Stack<>();
   }
 
-  public List<ExpressionToken<?>> toRPN(final List<ExpressionToken<?>> input) {
-    for(ExpressionToken<?> t: input)
+  public List<Token<?>> toRPN(final List<Token<?>> input) {
+    for(Token<?> t: input)
       t.organiseRPN(california, texas);
 
     while (!texas.empty()) {
-      ExpressionToken<?> head = texas.pop();
+      Token<?> head = texas.pop();
       if(!tokenInstanceOfOperator(head))
         throw new UnbalancedException();
 
@@ -38,9 +35,9 @@ public class ShuntingYard
     return california;
   }
 
-  public double evaluate(final List<ExpressionToken<?>> reversePolishNotation) {
-    final Stack<ExpressionToken<?>> stack = new Stack<>();
-    for(ExpressionToken<?> t: reversePolishNotation) {
+  public double evaluate(final List<Token<?>> reversePolishNotation) {
+    final Stack<Token<?>> stack = new Stack<>();
+    for(Token<?> t: reversePolishNotation) {
       if(t instanceof Value)
       {
         stack.push(t);
@@ -61,7 +58,7 @@ public class ShuntingYard
     return v.getValue();
   }
 
-  private boolean tokenInstanceOfOperator(final ExpressionToken<?> t) {
+  private boolean tokenInstanceOfOperator(final Token<?> t) {
     return t instanceof Operator;
   }
 }

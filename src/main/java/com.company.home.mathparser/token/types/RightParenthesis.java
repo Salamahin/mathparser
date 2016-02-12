@@ -3,18 +3,19 @@ package com.company.home.mathparser.token.types;
 import com.company.home.mathparser.token.UnbalancedException;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Stack;
 
-public class RightParenthesis extends ExpressionToken<String>
+public class RightParenthesis extends Token<String>
 {
-  public RightParenthesis()
+  public RightParenthesis(final String remainingExpression, final Optional<Token<?>> prevToken)
   {
-    super(")");
+    super(")", remainingExpression, prevToken);
   }
 
-  @Override public final void organiseRPN(final List<ExpressionToken<?>> california, final Stack<ExpressionToken<?>> texas)
+  @Override public final void organiseRPN(final List<Token<?>> california, final Stack<Token<?>> texas)
   {
-    ExpressionToken<?> head = null;
+    Token<?> head = null;
     while (!texas.isEmpty()) {
       head = texas.peek();
       if(tokenIsInstanceOfLeftParenthesis(head))
@@ -36,11 +37,11 @@ public class RightParenthesis extends ExpressionToken<String>
       california.add(texas.pop());
   }
 
-  private boolean tokenIsInstanceOfLeftParenthesis(final ExpressionToken<?> token){
+  private boolean tokenIsInstanceOfLeftParenthesis(final Token<?> token){
     return token instanceof LeftParenthesis;
   }
 
-  private boolean tokenIsInstanceOfFunc(final ExpressionToken<?> token) {
+  private boolean tokenIsInstanceOfFunc(final Token<?> token) {
     return token instanceof Func;
   }
 

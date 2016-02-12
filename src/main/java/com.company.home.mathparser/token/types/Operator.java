@@ -1,11 +1,13 @@
 package com.company.home.mathparser.token.types;
 
 
+import java.util.Optional;
+
 public abstract class Operator extends Calculable implements Comparable<Operator>
 {
-  protected Operator(final String value)
+  protected Operator(final String value, final String remainigExpression, final Optional<Token<?>> nextToken)
   {
-    super(value);
+    super(value, remainigExpression, nextToken);
   }
 
   protected abstract int getPrecedence();

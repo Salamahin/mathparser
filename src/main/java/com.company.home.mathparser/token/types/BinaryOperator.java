@@ -1,20 +1,21 @@
 package com.company.home.mathparser.token.types;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Stack;
 
 public abstract class BinaryOperator extends Operator
 {
-  protected BinaryOperator(final String value)
+  protected BinaryOperator(final String value, final String remainingExpression, final Optional<Token<?>> nextToken)
   {
-    super(value);
+    super(value, remainingExpression, nextToken);
   }
 
-  @Override public final void organiseRPN(final List<ExpressionToken<?>> california, final Stack<ExpressionToken<?>> texas)
+  @Override public final void organiseRPN(final List<Token<?>> california, final Stack<Token<?>> texas)
   {
     while (texas.size() != 0)
     {
-      final ExpressionToken<?> head=texas.peek();
+      final Token<?> head=texas.peek();
       if (!tokenIsInstanceOfBinaryOperator(head))
         break;
 
@@ -36,14 +37,14 @@ public abstract class BinaryOperator extends Operator
   protected abstract Value doEvaluate(final Value first, final Value second);
 
   @Override
-  public final void evaluate(final Stack<ExpressionToken<?>> stack) {
+  public final void evaluate(final Stack<Token<?>> stack) {
     final Value second = (Value) stack.pop();
     final Value first = (Value) stack.pop();
     stack.push(doEvaluate(first, second));
   }
 
 
-  private boolean tokenIsInstanceOfBinaryOperator(final ExpressionToken<?> t)
+  private boolean tokenIsInstanceOfBinaryOperator(final Token<?> t)
   {
     return t instanceof BinaryOperator;
   }

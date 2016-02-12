@@ -1,6 +1,5 @@
 package com.company.home.mathparser.token.producers;
 
-import com.company.home.mathparser.token.TokenInformation;
 import com.company.home.mathparser.token.types.*;
 
 import java.util.Optional;

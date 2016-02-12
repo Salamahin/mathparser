@@ -1,8 +1,7 @@
 package com.company.home.mathparser.token;
 
-import com.company.home.mathparser.token.types.ExpressionToken;
+import com.company.home.mathparser.token.types.Token;
 import com.google.common.collect.Lists;
-import org.assertj.core.data.Percentage;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -30,8 +29,8 @@ public class ShuntingYardTest
     final String expression="3 + 4 * 2 / ( 1 - 5 ) ^ 2 ^ 3";
     final List<String> expectedList=Lists.newArrayList("3.0", "4.0", "2.0", "*", "1.0", "5.0", "-", "2.0", "3.0", "^", "^", "/", "+");
 
-    final List<ExpressionToken<?>> tokens=tokenizer.tokenize(expression);
-    final List<ExpressionToken<?>> rpn= shuntingYard.toRPN(tokens);
+    final List<Token<?>> tokens=tokenizer.tokenize(expression);
+    final List<Token<?>> rpn= shuntingYard.toRPN(tokens);
 
     assertThat(toListOfString(rpn)).isEqualTo(expectedList);
   }
@@ -42,8 +41,8 @@ public class ShuntingYardTest
     final String expression="3 * (1 + 2)";
     final List<String> expectedList=Lists.newArrayList("3.0", "1.0", "2.0", "+", "*");
 
-    final List<ExpressionToken<?>> tokens=tokenizer.tokenize(expression);
-    final List<ExpressionToken<?>> rpn= shuntingYard.toRPN(tokens);
+    final List<Token<?>> tokens=tokenizer.tokenize(expression);
+    final List<Token<?>> rpn= shuntingYard.toRPN(tokens);
 
     assertThat(toListOfString(rpn)).isEqualTo(expectedList);
   }
@@ -54,8 +53,8 @@ public class ShuntingYardTest
     final String expression="abs ( max ( 2 , 3 ) / 3 * 3.1415 )";
     final List<String> expectedList=Lists.newArrayList("2.0", "3.0", "max", "3.0", "/", "3.1415", "*", "abs");
 
-    final List<ExpressionToken<?>> tokens=tokenizer.tokenize(expression);
-    final List<ExpressionToken<?>> rpn= shuntingYard.toRPN(tokens);
+    final List<Token<?>> tokens=tokenizer.tokenize(expression);
+    final List<Token<?>> rpn= shuntingYard.toRPN(tokens);
 
     assertThat(toListOfString(rpn)).isEqualTo(expectedList);
   }
@@ -64,7 +63,7 @@ public class ShuntingYardTest
   public void testUnbalanced1() throws Exception
   {
     final String expression="3 + 4 * 2 / ( 1 - 5 ";
-    final List<ExpressionToken<?>> tokens=tokenizer.tokenize(expression);
+    final List<Token<?>> tokens=tokenizer.tokenize(expression);
     shuntingYard.toRPN(tokens);
   }
 
@@ -72,7 +71,7 @@ public class ShuntingYardTest
   public void testUnbalanced2() throws Exception
   {
     final String expression="3 + max( 1 - 5 , 2 + 3";
-    final List<ExpressionToken<?>> tokens=tokenizer.tokenize(expression);
+    final List<Token<?>> tokens=tokenizer.tokenize(expression);
     shuntingYard.toRPN(tokens);
   }
 
@@ -80,8 +79,8 @@ public class ShuntingYardTest
   public void testEvaluate1() throws Exception
   {
     final String expression = "5 + ((1 + 2) * 4) - 3";
-    final List<ExpressionToken<?>> tokens=tokenizer.tokenize(expression);
-    final List<ExpressionToken<?>> rpn=shuntingYard.toRPN(tokens);
+    final List<Token<?>> tokens=tokenizer.tokenize(expression);
+    final List<Token<?>> rpn=shuntingYard.toRPN(tokens);
     assertThat(shuntingYard.evaluate(rpn)).isCloseTo(14, withPercentage(0.1));
   }
 
@@ -89,8 +88,8 @@ public class ShuntingYardTest
   public void testEvaluate2() throws Exception
   {
     final String expression = "-5 - (-(1 + 2) * 4) - 3";
-    final List<ExpressionToken<?>> tokens=tokenizer.tokenize(expression);
-    final List<ExpressionToken<?>> rpn=shuntingYard.toRPN(tokens);
+    final List<Token<?>> tokens=tokenizer.tokenize(expression);
+    final List<Token<?>> rpn=shuntingYard.toRPN(tokens);
     assertThat(shuntingYard.evaluate(rpn)).isCloseTo(4, withPercentage(0.1));
   }
 }

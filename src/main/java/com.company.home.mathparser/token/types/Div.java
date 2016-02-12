@@ -1,10 +1,12 @@
 package com.company.home.mathparser.token.types;
 
+import java.util.Optional;
+
 public final class Div extends BinaryOperator
 {
-  public Div()
+  public Div(final String remainingExpression, final Optional<Token<?>> prevToken)
   {
-    super("/");
+    super("/", remainingExpression, prevToken);
   }
 
   @Override protected int getPrecedence()

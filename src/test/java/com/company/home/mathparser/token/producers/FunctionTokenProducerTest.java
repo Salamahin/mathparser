@@ -1,11 +1,9 @@
 package com.company.home.mathparser.token.producers;
 
-import com.company.home.mathparser.token.TokenInformation;
 import org.junit.Before;
 import org.junit.Test;
 
 import static org.assertj.core.api.StrictAssertions.assertThat;
-import static org.junit.Assert.*;
 
 public class FunctionTokenProducerTest {
     private TokenProducer producer;

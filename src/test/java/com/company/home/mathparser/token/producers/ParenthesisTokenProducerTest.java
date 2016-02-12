@@ -1,6 +1,5 @@
 package com.company.home.mathparser.token.producers;
 
-import com.company.home.mathparser.token.TokenInformation;
 import org.junit.Before;
 import org.junit.Test;
 

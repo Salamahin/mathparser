@@ -1,6 +1,5 @@
 package com.company.home.mathparser.token.producers;
 
-import com.company.home.mathparser.token.TokenInformation;
 import com.company.home.mathparser.token.types.*;
 
 import java.util.Optional;
@@ -18,28 +17,26 @@ public final class BinaryOperationTokenProducer implements TokenProducer
     return InstanceHolder.INSTANCE;
   }
 
-  @Override public Optional<TokenInformation> tryProduceToken(final String expression)
+  @Override
+  public Optional<Token<?>> tryProduceToken(final String expression, final Optional<Token<?>> prevToken)
   {
+    final String remainingExpression = expression.substring(1);
+
     switch (expression.charAt(0))
     {
       case '-':
-        return getTokenInformation(expression, new Minus());
+        return Optional.of(new Minus(remainingExpression, prevToken));
       case '+':
-        return getTokenInformation(expression, new Plus());
+        return Optional.of( new Plus(remainingExpression, prevToken));
       case '/':
-        return getTokenInformation(expression, new Div());
+        return Optional.of(new Div(remainingExpression, prevToken));
       case '*':
-        return getTokenInformation(expression, new Mul());
+        return Optional.of(new Mul(remainingExpression, prevToken));
       case '^':
-        return getTokenInformation(expression, new Pow());
+        return Optional.of(new Pow(remainingExpression, prevToken));
 
       default:
         return Optional.empty();
     }
-  }
-
-  private Optional<TokenInformation> getTokenInformation(final String expression, final ExpressionToken<?> token)
-  {
-    return Optional.of(new TokenInformation(token, expression.substring(1), this));
   }
 }

@@ -1,10 +1,12 @@
 package com.company.home.mathparser.token.types;
 
+import java.util.Optional;
+
 public class UnaryMinus extends UnaryOperator
 {
-  public UnaryMinus()
+  public UnaryMinus(final String remainingExpression, final Optional<Token<?>> prevToken)
   {
-    super("un-");
+    super("un-", remainingExpression, prevToken);
   }
 
 
