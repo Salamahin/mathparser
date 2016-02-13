@@ -1,7 +1,10 @@
 package com.company.home.mathparser.token.producers;
 
+import com.company.home.mathparser.token.types.Token;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -20,10 +23,10 @@ public class ValueTokenProducerTest
   public void testNumberTokenProducerNormal() throws Exception
   {
     final String expression = "2.52+6";
-    final TokenInformation information=producer.tryProduceToken(expression).get();
+    final Token<?> t=producer.tryProduceToken(expression, Optional.empty()).get();
 
-    assertThat(information.getTokenValue().getValue()).isEqualTo(2.52);
-    assertThat(information.getRemainingExpression()).isEqualTo("+6");
+    assertThat(t.getValue()).isEqualTo(2.52);
+    assertThat(t.getRemainigExpression()).isEqualTo("+6");
   }
 
   @Test
@@ -31,6 +34,6 @@ public class ValueTokenProducerTest
   {
     final String expression = "(2.52)";
 
-    assertThat(producer.tryProduceToken(expression).isPresent()).isFalse();
+    assertThat(producer.tryProduceToken(expression, Optional.empty()).isPresent()).isFalse();
   }
 }

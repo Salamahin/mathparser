@@ -1,7 +1,10 @@
 package com.company.home.mathparser.token.producers;
 
+import com.company.home.mathparser.token.types.Token;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -20,19 +23,19 @@ public class ParenthesisTokenProducerTest
   public void testOpenParenthesisTokenProducer() throws Exception {
 
     final String expression = "(234)";
-    final TokenInformation information=producer.tryProduceToken(expression).get();
+    final Token<?> t=producer.tryProduceToken(expression, Optional.empty()).get();
 
-    assertThat(information.getTokenValue().getValue()).isEqualTo("(");
-    assertThat(information.getRemainingExpression()).isEqualTo("234)");
+    assertThat(t.getValue()).isEqualTo("(");
+    assertThat(t.getRemainigExpression()).isEqualTo("234)");
   }
 
   @Test
   public void testClosedParenthesisTokenProducer() throws Exception {
 
     final String expression = ")233";
-    final TokenInformation information=producer.tryProduceToken(expression).get();
+    final Token<?> t=producer.tryProduceToken(expression, Optional.empty()).get();
 
-    assertThat(information.getTokenValue().getValue()).isEqualTo(")");
-    assertThat(information.getRemainingExpression()).isEqualTo("233");
+    assertThat(t.getValue()).isEqualTo(")");
+    assertThat(t.getRemainigExpression()).isEqualTo("233");
   }
 }
