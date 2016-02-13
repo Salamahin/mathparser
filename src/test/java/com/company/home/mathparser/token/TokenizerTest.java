@@ -8,6 +8,7 @@ import java.util.List;
 
 import static com.company.home.mathparser.token.Commons.toListOfString;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.StrictAssertions.setAllowComparingPrivateFields;
 
 public class TokenizerTest {
 
@@ -17,7 +18,6 @@ public class TokenizerTest {
     public void setUp() throws Exception {
         tokenizer = new Tokenizer();
     }
-
 
     @Test
     public void canTokenize1() throws Exception {

@@ -27,7 +27,7 @@ public final class BinaryOperationTokenProducer implements TokenProducer
       case '-':
         return Optional.of(new Minus(remainingExpression, prevToken));
       case '+':
-        return Optional.of( new Plus(remainingExpression, prevToken));
+        return Optional.of(new Plus(remainingExpression, prevToken));
       case '/':
         return Optional.of(new Div(remainingExpression, prevToken));
       case '*':

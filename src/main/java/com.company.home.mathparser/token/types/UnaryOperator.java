@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Stack;
 
-abstract class UnaryOperator extends Operator
+public abstract class UnaryOperator extends Operator
 {
   protected UnaryOperator(final String value, final String remainingExpression, final Optional<Token<?>> prevToken)
   {
