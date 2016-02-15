@@ -1,5 +1,7 @@
 package com.company.home.mathparser.token.types;
 
+import com.company.home.mathparser.token.NotEnoughOperands;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.Stack;
@@ -38,6 +40,9 @@ public abstract class BinaryOperator extends Operator
 
   @Override
   public final void evaluate(final Stack<Token<?>> stack) {
+    if(stack.size() < 2)
+      throw new NotEnoughOperands();
+
     final Value second = (Value) stack.pop();
     final Value first = (Value) stack.pop();
     stack.push(doEvaluate(first, second));
