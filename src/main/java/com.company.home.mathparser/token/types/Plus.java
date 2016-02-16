@@ -9,9 +9,9 @@ public final class Plus extends BinaryOperator
     super("+", remainingExpression, prevToken);
   }
 
-  @Override protected Precendence getPrecedence()
+  @Override protected Precedence getPrecedence()
   {
-    return Precendence.NORMAL;
+    return Precedence.NORMAL;
   }
 
   @Override

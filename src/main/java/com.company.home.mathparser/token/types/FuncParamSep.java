@@ -7,8 +7,8 @@ import java.util.Optional;
 import java.util.Stack;
 
 public final class FuncParamSep extends Token<String> {
-    public FuncParamSep(final String remainigExpression, final Optional<Token<?>> prevToken) {
-        super(",", remainigExpression, prevToken);
+    public FuncParamSep(final String remainingExpression, final Optional<Token<?>> prevToken) {
+        super(",", remainingExpression, prevToken);
     }
 
     @Override
@@ -16,17 +16,17 @@ public final class FuncParamSep extends Token<String> {
         Token<?> head = null;
         while (!texas.isEmpty()) {
             head = texas.peek();
-            if(isLeftParenhesis(head))
+            if(isLeftParenthesis(head))
                 break;
 
             california.add(texas.pop());
         }
 
-        if(!isLeftParenhesis(head))
+        if(!isLeftParenthesis(head))
             throw new UnbalancedException();
     }
 
-    private boolean isLeftParenhesis(final Token<?> t) {
+    private boolean isLeftParenthesis(final Token<?> t) {
         return t instanceof LeftParenthesis;
     }
 

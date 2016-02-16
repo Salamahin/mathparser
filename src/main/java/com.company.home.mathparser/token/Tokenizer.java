@@ -5,8 +5,6 @@ import com.company.home.mathparser.token.types.Token;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -16,8 +14,6 @@ import static java.util.stream.Collectors.toList;
 
 public class Tokenizer
 {
-  private static final Logger LOG=LoggerFactory.getLogger(Tokenizer.class);
-
   private static final List<TokenProducer> POSSIBLE_PRODUCERS=Lists.newArrayList(
       new ValueTokenProducer(),
       new UnaryOperationTokenProducer(),
@@ -33,17 +29,17 @@ public class Tokenizer
     String expr=expression.replaceAll(" ", "");
     final List<Token<?>> tokens=new LinkedList<>();
 
-    Optional<Token<?>> pretToken=Optional.empty();
+    Optional<Token<?>> prevToken=Optional.empty();
 
     while (!Strings.isNullOrEmpty(expr))
     {
-      final Optional<Token<?>> recognizedToken=tryFindMatchingToken(expr, pretToken);
+      final Optional<Token<?>> recognizedToken=tryFindMatchingToken(expr, prevToken);
 
       if (!recognizedToken.isPresent())
         break;
 
       expr=recognizedToken.get().getRemainingExpression();
-      pretToken=recognizedToken;
+      prevToken=recognizedToken;
       tokens.add(recognizedToken.get());
     }
 

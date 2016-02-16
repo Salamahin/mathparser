@@ -6,7 +6,7 @@ import java.util.Stack;
 
 public abstract class Func extends Calculable {
 
-    protected Func(final String value, final String remainingExpression, final Optional<Token<?>> prevToken) {
+    Func(final String value, final String remainingExpression, final Optional<Token<?>> prevToken) {
         super(value, remainingExpression, prevToken);
     }
 

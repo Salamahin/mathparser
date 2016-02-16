@@ -9,9 +9,9 @@ public final class Mul extends BinaryOperator
     super("*", remainingExpression, prevToken);
   }
 
-  @Override protected Precendence getPrecedence()
+  @Override protected Precedence getPrecedence()
   {
-    return Precendence.HIGH;
+    return Precedence.HIGH;
   }
 
 

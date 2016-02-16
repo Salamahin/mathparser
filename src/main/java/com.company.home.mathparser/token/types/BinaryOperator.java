@@ -32,8 +32,8 @@ public abstract class BinaryOperator extends Operator
 
   private boolean compareWith(final BinaryOperator operator)
   {
-    final Precendence p1=getPrecedence();
-    final Precendence p2=operator.getPrecedence();
+    final Precedence p1=getPrecedence();
+    final Precedence p2=operator.getPrecedence();
     final int compareResult = p1.compareTo(p2);
 
     return (isLeftAssociative() && compareResult >= 0) ||
@@ -58,5 +58,5 @@ public abstract class BinaryOperator extends Operator
     return t instanceof BinaryOperator;
   }
 
-  public abstract boolean isLeftAssociative();
+  protected abstract boolean isLeftAssociative();
 }

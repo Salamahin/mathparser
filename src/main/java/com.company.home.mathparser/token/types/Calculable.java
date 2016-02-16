@@ -5,7 +5,7 @@ import java.util.Optional;
 import java.util.Stack;
 
 public abstract class Calculable extends Token<String> {
-    protected Calculable(final String value, final String remainingExpression, final Optional<Token<?>> prevToken) {
+    Calculable(final String value, final String remainingExpression, final Optional<Token<?>> prevToken) {
         super(value, remainingExpression, prevToken);
     }
 

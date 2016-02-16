@@ -9,7 +9,6 @@ import java.util.Optional;
 import java.util.Stack;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.*;
 
 public class MaxTest
 {

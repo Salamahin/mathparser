@@ -5,12 +5,12 @@ import java.util.Optional;
 
 public abstract class Operator extends Calculable implements Comparable<Operator>
 {
-  protected Operator(final String value, final String remainigExpression, final Optional<Token<?>> nextToken)
+  Operator(final String value, final String remainingExpression, final Optional<Token<?>> nextToken)
   {
-    super(value, remainigExpression, nextToken);
+    super(value, remainingExpression, nextToken);
   }
 
-  protected abstract Precendence getPrecedence();
+  protected abstract Precedence getPrecedence();
 
   @Override public final int compareTo(final Operator o)
   {

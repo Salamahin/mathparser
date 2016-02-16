@@ -10,9 +10,9 @@ public class UnaryMinus extends UnaryOperator
   }
 
 
-  @Override protected Precendence getPrecedence()
+  @Override protected Precedence getPrecedence()
   {
-    return Precendence.LOW;
+    return Precedence.LOW;
   }
 
   @Override

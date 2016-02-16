@@ -3,7 +3,7 @@ package com.company.home.mathparser;
 import com.company.home.mathparser.token.ShuntingYard;
 import com.company.home.mathparser.token.Tokenizer;
 
-public class MathParser
+class MathParser
 {
   private final ShuntingYard evaluator = new ShuntingYard();
   private final Tokenizer tokenizer = new Tokenizer();

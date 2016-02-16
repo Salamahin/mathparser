@@ -10,10 +10,10 @@ public abstract class Token<T>
   private final String remainingExpression;
   private final Optional<Token<?>> previousToken;
 
-  protected Token(
-          final T value,
-          final String remainingExpression,
-          final Optional<Token<?>> previousToken
+  Token(
+      final T value,
+      final String remainingExpression,
+      final Optional<Token<?>> previousToken
   ) {
     this.value=value;
     this.remainingExpression=remainingExpression;
