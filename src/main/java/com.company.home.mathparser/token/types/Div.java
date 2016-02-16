@@ -9,9 +9,9 @@ public final class Div extends BinaryOperator
     super("/", remainingExpression, prevToken);
   }
 
-  @Override protected int getPrecedence()
+  @Override protected Precendence getPrecedence()
   {
-    return 3;
+    return Precendence.HIGH;
   }
 
 

@@ -7,16 +7,16 @@ import java.util.Stack;
 public abstract class Token<T>
 {
   private final T value;
-  private final String remainigExpression;
+  private final String remainingExpression;
   private final Optional<Token<?>> previousToken;
 
   protected Token(
           final T value,
-          final String remainigExpression,
+          final String remainingExpression,
           final Optional<Token<?>> previousToken
   ) {
     this.value=value;
-    this.remainigExpression = remainigExpression;
+    this.remainingExpression=remainingExpression;
     this.previousToken = previousToken;
   }
 
@@ -25,8 +25,8 @@ public abstract class Token<T>
     return value;
   }
 
-  public final String getRemainigExpression() {
-    return remainigExpression;
+  public final String getRemainingExpression() {
+    return remainingExpression;
   }
 
   public final Optional<Token<?>> getPreviousToken() {

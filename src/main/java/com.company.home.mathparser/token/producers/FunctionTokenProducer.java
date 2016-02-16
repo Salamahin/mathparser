@@ -8,17 +8,6 @@ import com.company.home.mathparser.token.types.Token;
 import java.util.Optional;
 
 public class FunctionTokenProducer implements TokenProducer {
-    private static class InstanceHolder {
-        private static final TokenProducer INSTANCE = new FunctionTokenProducer();
-    }
-
-    private FunctionTokenProducer() {
-    }
-
-    public static TokenProducer getInstance() {
-        return InstanceHolder.INSTANCE;
-    }
-
     private Optional<Token<?>> tryProduceFuncSeparator(final String expression, final Optional<Token<?>> prevToken) {
         if(expression.charAt(0) != ',')
             return Optional.empty();

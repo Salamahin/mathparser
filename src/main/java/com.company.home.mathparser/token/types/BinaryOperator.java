@@ -18,7 +18,7 @@ public abstract class BinaryOperator extends Operator
     while (texas.size() != 0)
     {
       final Token<?> head=texas.peek();
-      if (!tokenIsInstanceOfBinaryOperator(head))
+      if (!isBinaryOperator(head))
         break;
 
       final BinaryOperator castedHead=(BinaryOperator) head;
@@ -32,8 +32,12 @@ public abstract class BinaryOperator extends Operator
 
   private boolean compareWith(final BinaryOperator operator)
   {
-    return (isLeftAssociative() && getPrecedence() <= operator.getPrecedence()) ||
-            (!isLeftAssociative() && getPrecedence() <  operator.getPrecedence());
+    final Precendence p1=getPrecedence();
+    final Precendence p2=operator.getPrecedence();
+    final int compareResult = p1.compareTo(p2);
+
+    return (isLeftAssociative() && compareResult >= 0) ||
+            (!isLeftAssociative() && compareResult > 0);
   }
 
   protected abstract Value doEvaluate(final Value first, final Value second);
@@ -49,7 +53,7 @@ public abstract class BinaryOperator extends Operator
   }
 
 
-  private boolean tokenIsInstanceOfBinaryOperator(final Token<?> t)
+  private boolean isBinaryOperator(final Token<?> t)
   {
     return t instanceof BinaryOperator;
   }

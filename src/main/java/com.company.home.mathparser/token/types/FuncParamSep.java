@@ -16,17 +16,17 @@ public final class FuncParamSep extends Token<String> {
         Token<?> head = null;
         while (!texas.isEmpty()) {
             head = texas.peek();
-            if(tokenIsInstanceOfLeftParenthesis(head))
+            if(isLeftParenhesis(head))
                 break;
 
             california.add(texas.pop());
         }
 
-        if(!tokenIsInstanceOfLeftParenthesis(head))
+        if(!isLeftParenhesis(head))
             throw new UnbalancedException();
     }
 
-    private boolean tokenIsInstanceOfLeftParenthesis(final Token<?> t) {
+    private boolean isLeftParenhesis(final Token<?> t) {
         return t instanceof LeftParenthesis;
     }
 

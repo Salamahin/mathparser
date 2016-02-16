@@ -15,7 +15,7 @@ public class UnaryOperationTokenProducerTest {
     @Before
     public void setUp() throws Exception
     {
-        producer=UnaryOperationTokenProducer.getInstance();
+        producer=new UnaryOperationTokenProducer();
     }
 
     @Test
@@ -24,6 +24,6 @@ public class UnaryOperationTokenProducerTest {
         final Token<?> t=producer.tryProduceToken(expression, Optional.empty()).get();
 
         assertThat(t.getValue()).isEqualTo("un-");
-        assertThat(t.getRemainigExpression()).isEqualTo("(6.23");
+        assertThat(t.getRemainingExpression()).isEqualTo("(6.23");
     }
 }

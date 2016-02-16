@@ -2,7 +2,7 @@ package com.company.home.mathparser.token;
 
 import com.company.home.mathparser.token.types.*;
 
-public class TokenizeRuleKeeper {
+class TokenizeRuleKeeper {
 
     private boolean duplicatedUnaryOperators(final Token<?> t) {
         return instanceOfClass(UnaryOperator.class, t) &&

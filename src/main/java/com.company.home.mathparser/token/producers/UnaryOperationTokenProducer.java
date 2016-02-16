@@ -6,17 +6,6 @@ import java.util.Optional;
 
 public class UnaryOperationTokenProducer implements TokenProducer
 {
-  private static class InstanceHolder {
-    private static final TokenProducer INSTANCE = new UnaryOperationTokenProducer();
-  }
-
-  private UnaryOperationTokenProducer() {
-  }
-
-  public static TokenProducer getInstance() {
-    return InstanceHolder.INSTANCE;
-  }
-
   @Override public Optional<Token<?>> tryProduceToken(final String expression, final Optional<Token<?>> prevToken)
   {
     switch (expression.charAt(0))

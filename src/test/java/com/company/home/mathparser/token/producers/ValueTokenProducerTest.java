@@ -10,13 +10,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class ValueTokenProducerTest
 {
-
   private TokenProducer producer;
 
   @Before
   public void setUp() throws Exception
   {
-    producer=ValueTokenProducer.getInstance();
+    producer=new ValueTokenProducer();
   }
 
   @Test
@@ -26,7 +25,7 @@ public class ValueTokenProducerTest
     final Token<?> t=producer.tryProduceToken(expression, Optional.empty()).get();
 
     assertThat(t.getValue()).isEqualTo(2.52);
-    assertThat(t.getRemainigExpression()).isEqualTo("+6");
+    assertThat(t.getRemainingExpression()).isEqualTo("+6");
   }
 
   @Test

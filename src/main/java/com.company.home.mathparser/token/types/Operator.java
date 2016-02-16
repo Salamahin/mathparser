@@ -10,11 +10,11 @@ public abstract class Operator extends Calculable implements Comparable<Operator
     super(value, remainigExpression, nextToken);
   }
 
-  protected abstract int getPrecedence();
+  protected abstract Precendence getPrecedence();
 
   @Override public final int compareTo(final Operator o)
   {
-    return Integer.compare(getPrecedence(), o.getPrecedence());
+    return getPrecedence().compareTo(o.getPrecedence());
   }
 
   @Override final public String toString()

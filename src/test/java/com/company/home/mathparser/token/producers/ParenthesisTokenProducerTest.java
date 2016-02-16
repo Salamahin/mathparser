@@ -16,7 +16,7 @@ public class ParenthesisTokenProducerTest
   @Before
   public void setUp() throws Exception
   {
-    producer=ParenthesisTokenProducer.getInstance();
+    producer=new ParenthesisTokenProducer();
   }
 
   @Test
@@ -26,7 +26,7 @@ public class ParenthesisTokenProducerTest
     final Token<?> t=producer.tryProduceToken(expression, Optional.empty()).get();
 
     assertThat(t.getValue()).isEqualTo("(");
-    assertThat(t.getRemainigExpression()).isEqualTo("234)");
+    assertThat(t.getRemainingExpression()).isEqualTo("234)");
   }
 
   @Test
@@ -36,6 +36,6 @@ public class ParenthesisTokenProducerTest
     final Token<?> t=producer.tryProduceToken(expression, Optional.empty()).get();
 
     assertThat(t.getValue()).isEqualTo(")");
-    assertThat(t.getRemainigExpression()).isEqualTo("233");
+    assertThat(t.getRemainingExpression()).isEqualTo("233");
   }
 }

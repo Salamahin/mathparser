@@ -9,9 +9,9 @@ public class Pow extends BinaryOperator
     super("^", remainingExpression, prevToken);
   }
 
-  @Override protected int getPrecedence()
+  @Override protected Precendence getPrecedence()
   {
-    return 4;
+    return Precendence.HIGHEST;
   }
 
   @Override

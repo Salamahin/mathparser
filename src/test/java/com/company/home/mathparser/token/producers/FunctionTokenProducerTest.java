@@ -14,7 +14,7 @@ public class FunctionTokenProducerTest {
     @Before
     public void setUp() throws Exception
     {
-        producer=FunctionTokenProducer.getInstance();
+        producer=new FunctionTokenProducer();
     }
 
     @Test
@@ -23,7 +23,7 @@ public class FunctionTokenProducerTest {
         final Token<?> t=producer.tryProduceToken(expression, Optional.empty()).get();
 
         assertThat(t.getValue()).isEqualTo("abs");
-        assertThat(t.getRemainigExpression()).isEqualTo("(-6.23)");
+        assertThat(t.getRemainingExpression()).isEqualTo("(-6.23)");
     }
 
     @Test
@@ -32,7 +32,7 @@ public class FunctionTokenProducerTest {
         final Token<?> t=producer.tryProduceToken(expression, Optional.empty()).get();
 
         assertThat(t.getValue()).isEqualTo("max");
-        assertThat(t.getRemainigExpression()).isEqualTo("(-6.23)");
+        assertThat(t.getRemainingExpression()).isEqualTo("(-6.23)");
     }
 
     @Test
@@ -41,7 +41,7 @@ public class FunctionTokenProducerTest {
         final Token<?> t=producer.tryProduceToken(expression, Optional.empty()).get();
 
         assertThat(t.getValue()).isEqualTo(",");
-        assertThat(t.getRemainigExpression()).isEqualTo("-6.23");
+        assertThat(t.getRemainingExpression()).isEqualTo("-6.23");
     }
 
 }

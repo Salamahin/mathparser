@@ -11,62 +11,58 @@ import org.slf4j.LoggerFactory;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
-import static java.util.stream.Collectors.*;
+import static java.util.stream.Collectors.toList;
 
-public class Tokenizer {
-    private static final Logger LOG = LoggerFactory.getLogger(Tokenizer.class);
+public class Tokenizer
+{
+  private static final Logger LOG=LoggerFactory.getLogger(Tokenizer.class);
 
-    private static final List<TokenProducer> POSSIBLE_PRODUCERS = Lists.newArrayList(
-            ValueTokenProducer.getInstance(),
-            UnaryOperationTokenProducer.getInstance(),
-            BinaryOperationTokenProducer.getInstance(),
-            ParenthesisTokenProducer.getInstance(),
-            FunctionTokenProducer.getInstance()
-    );
-    private static final TokenizeRuleKeeper TOKENIZE_RULES_KEEPER = new TokenizeRuleKeeper();
+  private static final List<TokenProducer> POSSIBLE_PRODUCERS=Lists.newArrayList(
+      new ValueTokenProducer(),
+      new UnaryOperationTokenProducer(),
+      new BinaryOperationTokenProducer(),
+      new ParenthesisTokenProducer(),
+      new FunctionTokenProducer()
+  );
+  private static final TokenizeRuleKeeper TOKENIZE_RULES_KEEPER=new TokenizeRuleKeeper();
+  private static final TokenCandidatesSelector TOKEN_CANDIDATES_SELECTOR=new TokenCandidatesSelector();
 
-    public List<Token<?>> tokenize(final String expression) {
-        String expr = expression.replaceAll(" ", "");
-        final List<Token<?>> tokens = new LinkedList<>();
+  public List<Token<?>> tokenize(final String expression)
+  {
+    String expr=expression.replaceAll(" ", "");
+    final List<Token<?>> tokens=new LinkedList<>();
 
-        Optional<Token<?>> pretToken = Optional.empty();
+    Optional<Token<?>> pretToken=Optional.empty();
 
-        while (!Strings.isNullOrEmpty(expr)) {
-            final Optional<Token<?>> recognizedToken = tryFindMatchingToken(expr, pretToken);
+    while (!Strings.isNullOrEmpty(expr))
+    {
+      final Optional<Token<?>> recognizedToken=tryFindMatchingToken(expr, pretToken);
 
-            if (!recognizedToken.isPresent())
-                break;
+      if (!recognizedToken.isPresent())
+        break;
 
-            expr = recognizedToken.get().getRemainigExpression();
-            pretToken = recognizedToken;
-            tokens.add(recognizedToken.get());
-        }
-
-        if (!Strings.isNullOrEmpty(expr))
-            throw new UnrecognizedExpression(expression);
-
-        return ImmutableList.copyOf(tokens);
+      expr=recognizedToken.get().getRemainingExpression();
+      pretToken=recognizedToken;
+      tokens.add(recognizedToken.get());
     }
 
-    private Optional<Token<?>> tryFindMatchingToken(final String expr, final Optional<Token<?>> prevToken) {
-        final List<Token<?>> candidates = POSSIBLE_PRODUCERS.stream()
-                .map(p -> p.tryProduceToken(expr, prevToken))
-                .filter(Optional::isPresent)
-                .map(Optional::get)
-                .filter(TOKENIZE_RULES_KEEPER::matchesAllRules)
-                .collect(toList());
+    if (!Strings.isNullOrEmpty(expr))
+      throw new UnrecognizedExpression(expression);
 
-        if(candidates.size() == 0) {
-            LOG.debug("Parsing expression [{}] failed", expr);
-            return Optional.empty();
-        }
+    return ImmutableList.copyOf(tokens);
+  }
 
-        if(candidates.size() > 1) {
-            LOG.warn("Several possible candidates, the expression might be tokenized incorrectly: {}; {}", expr, candidates);
-        }
+  private Optional<Token<?>> tryFindMatchingToken(final String expr, final Optional<Token<?>> prevToken)
+  {
+    final List<Token<?>> candidates=POSSIBLE_PRODUCERS.stream()
+        .map(p -> p.tryProduceToken(expr, prevToken))
+        .filter(Optional::isPresent)
+        .map(Optional::get)
+        .filter(TOKENIZE_RULES_KEEPER::matchesAllRules)
+        .collect(toList());
 
-        return Optional.of(candidates.get(0));
-    }
+    return TOKEN_CANDIDATES_SELECTOR.select(candidates);
+  }
+
 }

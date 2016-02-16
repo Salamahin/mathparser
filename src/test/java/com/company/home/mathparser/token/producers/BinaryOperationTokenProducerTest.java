@@ -15,7 +15,7 @@ public class BinaryOperationTokenProducerTest
   @Before
   public void setUp() throws Exception
   {
-    producer=BinaryOperationTokenProducer.getInstance();
+    producer=new BinaryOperationTokenProducer();
   }
 
   @Test
@@ -24,7 +24,7 @@ public class BinaryOperationTokenProducerTest
     final Token<?> t=producer.tryProduceToken(expression, Optional.empty()).get();
 
     assertThat(t.getValue()).isEqualTo("+");
-    assertThat(t.getRemainigExpression()).isEqualTo("6.23");
+    assertThat(t.getRemainingExpression()).isEqualTo("6.23");
   }
 
   @Test
@@ -33,7 +33,7 @@ public class BinaryOperationTokenProducerTest
     final Token<?> t=producer.tryProduceToken(expression, Optional.empty()).get();
 
     assertThat(t.getValue()).isEqualTo("-");
-    assertThat(t.getRemainigExpression()).isEqualTo("6.23");
+    assertThat(t.getRemainingExpression()).isEqualTo("6.23");
   }
 
   @Test
@@ -42,7 +42,7 @@ public class BinaryOperationTokenProducerTest
     final Token<?> t=producer.tryProduceToken(expression, Optional.empty()).get();
 
     assertThat(t.getValue()).isEqualTo("/");
-    assertThat(t.getRemainigExpression()).isEqualTo("6.23");
+    assertThat(t.getRemainingExpression()).isEqualTo("6.23");
   }
 
   @Test
@@ -51,7 +51,7 @@ public class BinaryOperationTokenProducerTest
     final Token<?> information=producer.tryProduceToken(expression, Optional.empty()).get();
 
     assertThat(information.getValue()).isEqualTo("*");
-    assertThat(information.getRemainigExpression()).isEqualTo("6.23");
+    assertThat(information.getRemainingExpression()).isEqualTo("6.23");
   }
 
   @Test
@@ -60,6 +60,6 @@ public class BinaryOperationTokenProducerTest
     final Token<?> information=producer.tryProduceToken(expression, Optional.empty()).get();
 
     assertThat(information.getValue()).isEqualTo("^");
-    assertThat(information.getRemainigExpression()).isEqualTo("6.23");
+    assertThat(information.getRemainingExpression()).isEqualTo("6.23");
   }
 }

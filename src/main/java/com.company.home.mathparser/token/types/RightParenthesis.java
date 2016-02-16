@@ -18,13 +18,13 @@ public class RightParenthesis extends Token<String>
     Token<?> head = null;
     while (!texas.isEmpty()) {
       head = texas.peek();
-      if(tokenIsInstanceOfLeftParenthesis(head))
+      if(isLeftParenthesis(head))
           break;
 
       california.add(texas.pop());
     }
 
-    if(!tokenIsInstanceOfLeftParenthesis(head))
+    if(!isLeftParenthesis(head))
       throw new UnbalancedException();
 
     texas.pop();
@@ -33,15 +33,15 @@ public class RightParenthesis extends Token<String>
       return;
 
     head = texas.peek();
-    if(tokenIsInstanceOfFunc(head))
+    if(isFunc(head))
       california.add(texas.pop());
   }
 
-  private boolean tokenIsInstanceOfLeftParenthesis(final Token<?> token){
+  private boolean isLeftParenthesis(final Token<?> token){
     return token instanceof LeftParenthesis;
   }
 
-  private boolean tokenIsInstanceOfFunc(final Token<?> token) {
+  private boolean isFunc(final Token<?> token) {
     return token instanceof Func;
   }
 

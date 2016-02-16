@@ -8,17 +8,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public final class ValueTokenProducer implements TokenProducer {
-    private static class InstanceHolder {
-        private static final TokenProducer INSTANCE = new ValueTokenProducer();
-    }
-
-    private ValueTokenProducer() {
-    }
-
-    public static TokenProducer getInstance() {
-        return InstanceHolder.INSTANCE;
-    }
-
     private static final Pattern pattern = Pattern.compile("^[+-]?[0-9]*\\.?[0-9]+");
 
     @Override

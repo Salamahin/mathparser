@@ -8,17 +8,6 @@ import java.util.Optional;
 
 public final class ParenthesisTokenProducer implements TokenProducer
 {
-  private static class InstanceHolder {
-    private static final TokenProducer INSTANCE = new ParenthesisTokenProducer();
-  }
-
-  private ParenthesisTokenProducer() {
-  }
-
-  public static TokenProducer getInstance() {
-    return InstanceHolder.INSTANCE;
-  }
-
   @Override public Optional<Token<?>> tryProduceToken(final String expression, final Optional<Token<?>> prevToken)
   {
     String remainingExpression = expression.substring(1);
