@@ -12,11 +12,6 @@ class TokenCandidatesSelector
 {
   private static final Comparator<Token<?>> UNARY_MINUS_AND_VALUE_COMPARATOR=new Comparator<Token<?>>()
   {
-    private boolean isUnaryMinus(Token<?> o1)
-    {
-      return o1 instanceof UnaryMinus;
-    }
-
     private int getCompareResult(final Value v)
     {
       if (v.getValue() < 0)
