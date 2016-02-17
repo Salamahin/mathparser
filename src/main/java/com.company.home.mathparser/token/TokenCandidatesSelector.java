@@ -8,7 +8,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
-class TokenCandidatesSelector
+class TokenCandidatesSelector implements Comparator<Token<?>>
 {
   private static final Comparator<Token<?>> UNARY_MINUS_AND_VALUE_COMPARATOR=new Comparator<Token<?>>()
   {
@@ -31,16 +31,9 @@ class TokenCandidatesSelector
     }
   };
 
-  Optional<Token<?>> select(final List<Token<?>> candidates)
+
+  @Override public int compare(final Token<?> o1, final Token<?> o2)
   {
-    if (candidates.size() == 0)
-      return Optional.empty();
-    if (candidates.size() == 1)
-      return Optional.of(candidates.get(0));
-
-    return candidates.stream()
-        .sorted(UNARY_MINUS_AND_VALUE_COMPARATOR)
-        .findFirst();
+    return UNARY_MINUS_AND_VALUE_COMPARATOR.compare(o1, o2);
   }
-
 }

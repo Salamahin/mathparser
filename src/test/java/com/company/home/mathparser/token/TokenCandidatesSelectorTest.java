@@ -8,6 +8,7 @@ import com.google.common.collect.Lists;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,10 +32,10 @@ public class TokenCandidatesSelectorTest
     final Value value=new Value(-3, "", Optional.empty());
 
     final List<Token<?>> l=Lists.newArrayList(unaryMinus, value);
-    final Optional<Token<?>> token=selector.select(l);
+    Collections.sort(l, selector);
 
-    assertThat(token.get()).isInstanceOf(Value.class);
-    assertThat(token.get()).isEqualTo(value);
+    assertThat(l.get(0)).isInstanceOf(Value.class);
+    assertThat(l.get(0)).isEqualTo(value);
   }
 
   @Test
@@ -44,10 +45,10 @@ public class TokenCandidatesSelectorTest
     final Minus binaryMinus=new Minus("", Optional.empty());
 
     final List<Token<?>> l=Lists.newArrayList(unaryMinus, binaryMinus);
-    final Optional<Token<?>> token=selector.select(l);
+    Collections.sort(l, selector);
 
-    assertThat(token.get()).isInstanceOf(UnaryMinus.class);
-    assertThat(token.get()).isEqualTo(unaryMinus);
+    assertThat(l.get(0)).isInstanceOf(UnaryMinus.class);
+    assertThat(l.get(0)).isEqualTo(unaryMinus);
   }
 
 }

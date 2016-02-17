@@ -51,14 +51,13 @@ public class Tokenizer
 
   private Optional<Token<?>> tryFindMatchingToken(final String expr, final Optional<Token<?>> prevToken)
   {
-    final List<Token<?>> candidates=POSSIBLE_PRODUCERS.stream()
+    return POSSIBLE_PRODUCERS.stream()
         .map(p -> p.tryProduceToken(expr, prevToken))
         .filter(Optional::isPresent)
         .map(Optional::get)
         .filter(TOKENIZE_RULES_KEEPER::matchesAllRules)
-        .collect(toList());
-
-    return TOKEN_CANDIDATES_SELECTOR.select(candidates);
+        .sorted(TOKEN_CANDIDATES_SELECTOR)
+        .findFirst();
   }
 
 }
